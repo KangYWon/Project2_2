@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script>
+    // Your JavaScript code for validation, storing data, and alert goes here
+    function addWord() {
+        // Validation and data storage logic
+        var word = document.getElementById('word').value;
+        var meaning = document.getElementById('meaning').value;
+        var level = document.getElementById('level').value;
+
+        // Check if required fields are not empty
+        if (word.trim() === '' || meaning.trim() === '' || level.trim() === '') {
+            alert('입력이 되지 않았습니다. 다시 입력해주세요! ');
+            return;
+        }
+
+        // Show alert
+        alert('Word added successfully!');
+        
+    } 
+ </script>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 'Add' 페이지로 이동한 경우
+            // 'home-link'의 active 클래스를 제거하고 'add-link'에 active 클래스를 추가
+            document.getElementById('home-link').classList.remove('active');
+            document.getElementById('add-link').classList.add('active');
+            document.getElementById('view-link').classList.remove('active');
+            document.getElementById('edit-link').classList.remove('active');
+        });
+    </script>
+    
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: #dbb0b0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #dbb0b0;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+      table {
+        overflow-x: auto;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+            <a class="navbar-brand" href="#">My VOCA</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active" id="home-link"><a href="index.html">Home</a></li>
+                    <li class="active" id="add-link"><a href="#">Add</a></li>
+                    <li class="active" id="view-link"><a href="view.html">View</a></li>
+                    <li class="active" id="edit-link"><a href="edit.html">Edit</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Add Word</h2>
+        <form name="form" action="add_ok.php" id="addWordForm" method="post" >
+            <div class="form-group">
+                <label for="word">Word:</label>
+                <input type="text" class="form-control" id="word" required>
+            </div>
+            <div class="form-group">
+                <label for="meaning">Meaning:</label>
+                <input type="text" class="form-control" id="meaning" required>
+            </div>
+            <div class="form-group">
+                <label for="ability">Choose Level:</label>
+                <select id="level" name="level">
+                    <option value="Level 1">Level 1</option>
+                    <option value="Level 2">Level 2</option>
+                    <option value="Level 3">Level 3</option>
+                </select>
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" onclick="addWord()">Add</button>
+            </div>
+            
+        </form>
+    </div>
+    
+    
+    <footer class="container-fluid text-center">
+    <p>English is very Fun!!</p>
+    </footer>
+
+</body>
+</html>
+
