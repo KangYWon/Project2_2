@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script>
+    $(document).on("click", ".delete", function(){
+      $(this).parents("tr").remove();
+    $(".add-new").removeAttr("disabled");
+    });
+  </script>
+    
   <style>
     .navbar {
       margin-bottom: 0;
@@ -50,7 +58,7 @@
 </nav>
 
 <div class="container">
-  <h2>전체 영단어</h2>   
+  <h2>선택한 영단어</h2>   
   <div class="table-responsive">
     <table class="table table-hover">
       <thead>
@@ -61,9 +69,22 @@
           <th>Level</th>
           <th>Date</th>
           <th>Menu</th>
+          <th>중요도</th>
         </tr>
       </thead>
-      <tbody id="wordTableBody"></tbody>
+      <tbody>
+        <tr>
+            <td>1</td>
+            <td>apple</td>
+            <td>사과</td>
+            <td>Level 1</td>
+            <td>2023-10-07</td>
+            <td>Low</td>
+            <td>
+              <a class="edit" title="Edit" data-toggle="tooltip" href="edit.html?word=apple&meaning=사과&level=Level%201"><i class="material-icons">edit</i></a>
+              <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></a>
+            </td>
+        </tr>
     </table>
   </div>
 </div>
@@ -71,67 +92,6 @@
 <footer class="container-fluid text-center">
   <p>English is very Fun!!</p>
 </footer>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    displayStoredData();
-  });
-
-  function displayStoredData() {
-    var storedData = localStorage.getItem('formData');
-    if (storedData) {
-      var formData = JSON.parse(storedData);
-      addRowToTable(formData);
-    }
-  }
-
-  function addRowToTable(formData) {
-    var tbody = document.getElementById('wordTableBody');
-    var newRow = tbody.insertRow(tbody.rows.length);
-    newRow.insertCell(0).textContent = tbody.rows.length + 1;
-    newRow.insertCell(1).textContent = formData.word;
-    newRow.insertCell(2).textContent = formData.meaning;
-    newRow.insertCell(3).textContent = formData.level;
-    newRow.insertCell(4).textContent = getCurrentDate();
-
-    newRow.insertCell(5).appendChild(createButton('삭제', function () {
-      deleteRow(newRow);
-    }));
-
-    newRow.insertCell(6).appendChild(createButton('수정', function () {
-      editRow(newRow);
-    }));
-  }
-
-  function getCurrentDate() {
-    var today = new Date();
-    return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  }
-
-  function createButton(text, clickHandler) {
-    var button = document.createElement('button');
-    button.textContent = text;
-    button.onclick = clickHandler;
-    return button;
-  }
-
-  function deleteRow(row) {
-    var rowIndex = row.rowIndex - 1;
-    var storedData = JSON.parse(localStorage.getItem('formData')) || [];
-    storedData.splice(rowIndex, 1);
-    localStorage.setItem('formData', JSON.stringify(storedData));
-    row.parentNode.removeChild(row);
-    console.log("Deleted!");
-  }
-  
-
-  function editRow(row) {
-    var word = row.cells[1].textContent;
-    var meaning = row.cells[2].textContent;
-    var level = row.cells[3].textContent;
-    window.location.href = 'edit.html?word=' + encodeURIComponent(word) + '&meaning=' + encodeURIComponent(meaning) + '&level=' + encodeURIComponent(level);
-  }
-  </script>
 
 </body>
 </html>

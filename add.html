@@ -12,7 +12,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <script>
-    // Your JavaScript code for validation, storing data, and alert goes here
     function addWord() {
         // Validation and data storage logic
         var word = document.getElementById('word').value;
@@ -24,41 +23,23 @@
             alert('입력이 되지 않았습니다. 다시 입력해주세요! ');
             return;
         }
-        var storedData = JSON.parse(localStorage.getItem('formData')) || [];
 
         var newWord = {
             word: word,
             meaning: meaning,
             level: level
         };
-        storedData.push(newWord);
-        localStorage.setItem('formData', JSON.stringify(storedData));
-        // Show alert
-        alert('Word added successfully!');
 
-        var tableBody = window.opener.document.getElementById('wordTableBody');
-        var newRow = tableBody.insertRow();
-        newRow.innerHTML = `
-            <td class="text-nowrap">${tableBody.rows.length + 1}</td>
-            <td class="text-nowrap">${word}</td>
-            <td class="text-nowrap">${meaning}</td>
-            <td class="text-nowrap">${level}</td>
-            <td class="text-nowrap">${getCurrentDate()}</td>
-            <td class="text-nowrap">
-                <a href="edit.html?word=${word}&meaning=${meaning}&level=${level}">수정</a>
-            </td>
-        `;
+        alert('Word added successfully!');
     } 
 
         document.addEventListener('DOMContentLoaded', function () {
-            // 'Add' 페이지로 이동한 경우
-            // 'home-link'의 active 클래스를 제거하고 'add-link'에 active 클래스를 추가
             document.getElementById('home-link').classList.remove('active');
             document.getElementById('add-link').classList.add('active');
             document.getElementById('view-link').classList.remove('active');
             document.getElementById('edit-link').classList.remove('active');
         });
-    </script>
+  </script>
     
 
   <style>
@@ -85,7 +66,15 @@
       color: white;
       padding: 15px;
     }
+
+    .form-control{
+      width: 50%;
+    }
     
+    .form-group.text-right {
+      margin-right: 45%; 
+    }
+
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -100,6 +89,7 @@
 
   </style>
 </head>
+
 <body>
 
     <nav class="navbar navbar-inverse">
@@ -123,8 +113,9 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h2>Add Word</h2>
+    <div class="container mx-auto">
+      <fieldset>
+        <legend>Add Word:</legend>
         <form name="form" action="view.html" id="addWordForm" method="post" >
             <div class="form-group">
                 <label for="word">Word:</label>
@@ -142,11 +133,20 @@
                     <option value="Level 3">Level 3</option>
                 </select>
             </div>
+            <div class="form-group">
+              <label for="importance">중요도:</label>
+              <input type="radio" id="low" name="importance" value="low" checked>
+              <label for="low">Low</label>
+              <input type="radio" id="middle" name="importance" value="middle">
+              <label for="middle">Middle</label>
+              <input type="radio" id="high" name="importance" value="high">
+              <label for="high">High</label>
+            </div>
             <div class="form-group text-right">
                 <button type="submit" onclick="addWord()">Add</button>
             </div>
-            
         </form>
+      </fieldset>
     </div>
     
     

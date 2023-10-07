@@ -16,67 +16,46 @@
             document.getElementById('add-link').classList.remove('active');
             document.getElementById('view-link').classList.remove('active');
             document.getElementById('edit-link').classList.add('active');
+
+            bringForm();
         });
 
+        function bringForm() {
+            // Get URL parameters
+            var urlParams = new URLSearchParams(window.location.search);
+            
+            // Check if parameters exist
+            if (urlParams.has('word') && urlParams.has('meaning') && urlParams.has('level')) {
+                // Get values from parameters
+                var word = urlParams.get('word');
+                var meaning = urlParams.get('meaning');
+                var level = urlParams.get('level');
 
-    document.addEventListener('DOMContentLoaded', function () {
-      // URL 파라미터에서 초기값 읽어오기
-      var urlParams = new URLSearchParams(window.location.search);
-      var word = urlParams.get('word') || '';
-      var meaning = urlParams.get('meaning') || '';
-      var level = urlParams.get('level') || '';
+                // Set values to form fields
+                document.getElementById('word').value = decodeURIComponent(word);
+                document.getElementById('meaning').value = decodeURIComponent(meaning);
+                document.getElementById('level').value = decodeURIComponent(level);
+            }
+        }
+            
+        function saveWord() {
+            // Get the values from the form
+            var word = document.getElementById('word').value;
+            var meaning = document.getElementById('meaning').value;
+            var level = document.getElementById('level').value;
 
-      // 초기값 설정
-      document.getElementById('word').value = word;
-      document.getElementById('meaning').value = meaning;
-      document.getElementById('level').value = level;
-    });
+            // Encode values for URL
+            var encodedWord = encodeURIComponent(word);
+            var encodedMeaning = encodeURIComponent(meaning);
+            var encodedLevel = encodeURIComponent(level);
 
-    function saveWord() {
-      // 수정된 값 읽어오기
-      var editedWord = document.getElementById('word').value;
-      var editedMeaning = document.getElementById('meaning').value;
-      var editedLevel = document.getElementById('level').value;
-      
-      // 입력 값이 비어있는지 확인
-    if (editedWord.trim() === '' || editedMeaning.trim() === '' || editedLevel.trim() === '') {
-      alert('입력이 되지 않았습니다. 다시 입력해주세요!');
-      return;
-    }
-    var storedData = JSON.parse(localStorage.getItem('formData')) || [];
-    localStorage.setItem('formData', JSON.stringify(storedData));
-
-    // alert 창 띄우기
-    alert('Word added successfully!');
-
-
-      // 테이블에 추가
-      var tableBody = window.opener.document.getElementById('wordTableBody');
-      var newRow = tableBody.insertRow();
-      newRow.innerHTML = `
-        <td class="text-nowrap">${tableBody.rows.length + 1}</td>
-        <td class="text-nowrap">${editedWord}</td>
-        <td class="text-nowrap">${editedMeaning}</td>
-        <td class="text-nowrap">${editedLevel}</td>
-        <td class="text-nowrap">${getCurrentDate()}</td>
-        <td class="text-nowrap">
-          <a href="edit.html?word=${editedWord}&meaning=${editedMeaning}&level=${editedLevel}">수정</a>
-        </td>
-      `;
-      window.location.href = "view.html";
-    }
-
-    function getCurrentDate() {
-      var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0');
-      var yyyy = today.getFullYear();
-      return mm + '/' + dd + '/' + yyyy;
-    }
-  </script>
+            // Redirect to view.html with parameters
+            window.location.href = "view.html?word=" + encodedWord + "&meaning=" + encodedMeaning + "&level=" + encodedLevel;
+        }   
+</script>
     
 
-  <style>
+<style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
@@ -100,7 +79,15 @@
       color: white;
       padding: 15px;
     }
+
+    .form-control{
+      width: 50%;
+    }
     
+    .form-group.text-right {
+      margin-right: 45%; 
+    }
+
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -113,7 +100,7 @@
       }
     }
 
-  </style>
+</style>
 </head>
 <body>
 
@@ -156,6 +143,15 @@
                   <option value="Level 2">Level 2</option>
                   <option value="Level 3">Level 3</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="importance">중요도:</label>
+                <input type="radio" id="low" name="importance" value="low" checked>
+                <label for="low">Low</label>
+                <input type="radio" id="middle" name="importance" value="middle">
+                <label for="middle">Middle</label>
+                <input type="radio" id="high" name="importance" value="high">
+                <label for="high">High</label>
               </div>
               <div class="form-group text-right">
                 <button type="button" onclick="saveWord()">Save</button>
