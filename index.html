@@ -34,7 +34,6 @@
             newRow.insertCell(2).textContent = formData.meaning; // 뜻
             newRow.insertCell(3).textContent = formData.level; // 레벨
             newRow.insertCell(4).textContent = getCurrentDate(); // 현재 날짜
-            newRow.insertCell(5).innerHTML = '<button onclick="deleteRow(this)">삭제</button>, <button onclick="editRow(this)">수정</button>'; // 삭제, 수정 버튼
         }
     }
 
@@ -42,16 +41,6 @@
         var today = new Date();
         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         return date;
-    }
-
-    function deleteRow(button) {
-        // 삭제 버튼이 클릭된 행 삭제
-        var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-    }
-
-    function editRow(button) {
-        alert('수정 기능은 여기에 구현하세요.');
     }
   </script>
 
@@ -125,9 +114,10 @@
                   <th>Meaning</th>
                   <th>Level</th>
                   <th>Date</th>
-                  <th>Menu</th>
+                  <th>❤️</th>
                 </tr>
               </thead>
+              <tbody id="wordTableBody"></tbody>
             </table>
           </div>
         </div>

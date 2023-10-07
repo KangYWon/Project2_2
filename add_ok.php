@@ -13,4 +13,5 @@
             localStorage.setItem('formData', JSON.stringify(" . json_encode($formData) . "));
             window.location.href = 'view.html';
           </script>";
+    exit; // PHP 실행 종료
 ?>
