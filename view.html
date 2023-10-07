@@ -7,166 +7,133 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // 페이지가 로드될 때 저장된 데이터를 가져와서 테이블에 추가
-        displayStoredData();
-    });
-
-    function displayStoredData() {
-        // 로컬 스토리지에서 'formData' 키로 저장된 데이터 가져오기
-        var storedData = localStorage.getItem('formData');
-
-        // 저장된 데이터가 있다면
-        if (storedData) {
-            // JSON 형식의 문자열을 객체로 변환
-            var formData = JSON.parse(storedData);
-
-            // 테이블에 저장된 데이터 추가
-            addRowToTable(formData);
-        }
-    }
-
-    function addRowToTable(formData) {
-        // 테이블의 tbody 요소 가져오기
-        var tbody = document.getElementById('wordTableBody');
-
-        // 새로운 행을 생성하고 데이터를 채움
-        var newRow = tbody.insertRow(tbody.rows.length);
-
-        // 각 열에 데이터 추가
-        newRow.insertCell(0).textContent = tbody.rows.length + 1; // 순서
-        newRow.insertCell(1).textContent = formData.word; // 단어
-        newRow.insertCell(2).textContent = formData.meaning; // 뜻
-        newRow.insertCell(3).textContent = formData.level; // 레벨
-        newRow.insertCell(4).textContent = getCurrentDate(); // 현재 날짜
-        // 삭제 버튼 생성
-        var deleteButton = document.createElement('button');
-        deleteButton.textContent = '삭제';
-        deleteButton.onclick = function () {
-            deleteRow(newRow);
-        };
-
-        // 수정 버튼 생성
-        var editButton = document.createElement('button');
-        editButton.textContent = '수정';
-        editButton.onclick = function () {
-            editRow(newRow);
-        };
-          newRow.insertCell(5).appendChild(deleteButton);
-          newRow.insertCell(6).appendChild(editButton);
-      }
-
-
-    function getCurrentDate() {
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        return date;
-    }
-    function deleteRow(button) {
-      // 삭제 버튼이 클릭된 행 삭제
-      var row = button.parentNode.parentNode;
-      var rowIndex = row.rowIndex - 1; 
-
-      var storedData = JSON.parse(localStorage.getItem('formData')) || [];
-
-      // 삭제할 단어를 배열에서 제거
-      storedData.splice(rowIndex, 1);
-
-      // 업데이트된 배열을 다시 localStorage에 저장
-      localStorage.setItem('formData', JSON.stringify(storedData));
-
-      // 테이블에서도 행을 제거
-      row.parentNode.removeChild(row);
-      console.log("Deleted!");
-    }
-
-    function editRow(button) {
-        // 수정 버튼이 클릭된 행의 데이터 가져오기
-        var row = button.parentNode.parentNode;
-        var word = row.cells[1].textContent;
-        var meaning = row.cells[2].textContent;
-        var level = row.cells[3].textContent;
-
-        // 수정 페이지로 이동
-        window.location.href = 'edit.html?word=' + encodeURIComponent(word) + '&meaning=' + encodeURIComponent(meaning) + '&level=' + encodeURIComponent(level);
-        
-    }
-  </script>
-
   <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
       background-color: #dbb0b0;
     }
-
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
       background-color: #f1f1f1;
       height: 100%;
     }
-    
-    /* Set black background color, white text and some padding */
     footer {
       background-color: #dbb0b0;
       color: white;
       padding: 15px;
     }
-
   </style>
 </head>
 <body>
 
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
-            </button>
-            <a class="navbar-brand" href="#">My VOCA</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="add.html">Add</a></li>
-                <li class="active"><a href="#">View</a></li>
-                <li><a href="#">Edit</a></li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">My VOCA</a>
     </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add.html">Add</a></li>
+        <li class="active"><a href="#">View</a></li>
+        <li><a href="#">Edit</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <div class="container">
-    <h2>전체 영단어</h2>   
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Word</th>
-                    <th>Meaning</th>
-                    <th>Level</th>
-                    <th>Date</th>
-                    <th>Menu</th>
-                </tr>
-            </thead>
-            <tbody id="wordTableBody"></tbody>
-        </table>
-    </div>
+  <h2>전체 영단어</h2>   
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Word</th>
+          <th>Meaning</th>
+          <th>Level</th>
+          <th>Date</th>
+          <th>Menu</th>
+        </tr>
+      </thead>
+      <tbody id="wordTableBody"></tbody>
+    </table>
+  </div>
 </div>
 
 <footer class="container-fluid text-center">
-    <p>English is very Fun!!</p>
+  <p>English is very Fun!!</p>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    displayStoredData();
+  });
+
+  function displayStoredData() {
+    var storedData = localStorage.getItem('formData');
+    if (storedData) {
+      var formData = JSON.parse(storedData);
+      addRowToTable(formData);
+    }
+  }
+
+  function addRowToTable(formData) {
+    var tbody = document.getElementById('wordTableBody');
+    var newRow = tbody.insertRow(tbody.rows.length);
+    newRow.insertCell(0).textContent = tbody.rows.length + 1;
+    newRow.insertCell(1).textContent = formData.word;
+    newRow.insertCell(2).textContent = formData.meaning;
+    newRow.insertCell(3).textContent = formData.level;
+    newRow.insertCell(4).textContent = getCurrentDate();
+    
+    var deleteButton = createButton('삭제', function () {
+      deleteRow(newRow);
+    });
+
+    var editButton = createButton('수정', function () {
+      editRow(newRow);
+    });
+
+    newRow.insertCell(5).appendChild(deleteButton);
+    newRow.insertCell(6).appendChild(editButton);
+  }
+
+  function getCurrentDate() {
+    var today = new Date();
+    return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  }
+
+  function createButton(text, clickHandler) {
+    var button = document.createElement('button');
+    button.textContent = text;
+    button.onclick = clickHandler;
+    return button;
+  }
+
+  function deleteRow(row) {
+    var rowIndex = row.rowIndex - 1;
+    var storedData = JSON.parse(localStorage.getItem('formData')) || [];
+    storedData.splice(rowIndex, 1);
+    localStorage.setItem('formData', JSON.stringify(storedData));
+    row.parentNode.removeChild(row);
+    console.log("Deleted!");
+  }
+
+  function editRow(row) {
+    var word = row.cells[1].textContent;
+    var meaning = row.cells[2].textContent;
+    var level = row.cells[3].textContent;
+    window.location.href = 'edit.html?word=' + encodeURIComponent(word) + '&meaning=' + encodeURIComponent(meaning) + '&level=' + encodeURIComponent(level);
+  }
+</script>
 
 </body>
 </html>
