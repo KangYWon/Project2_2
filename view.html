@@ -5,33 +5,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./my.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script>
-    $(document).on("click", ".delete", function(){
-      $(this).parents("tr").remove();
-    $(".add-new").removeAttr("disabled");
-    });
+      $(document).on("click", ".delete", function(){
+        if (confirm("정말 삭제하시겠습니까??") == true){    
+            //document.removefrm.submit();
+            $(this).parents("tr").remove();
+            $(".add-new").removeAttr("disabled");
+        }else{   //취소
+            return false;
+        }
+      });
+
+      $(document).on("click", ".edit", function(){
+        if (confirm("정말 수정하시겠습니까??") == true){    
+          var editLink = "edit.html?word=apple&meaning=사과&level=Level%201";
+          window.location.href = editLink;
+        }else{   //취소
+            return false;
+        }
+      });
+
   </script>
-    
+
   <style>
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-      background-color: #dbb0b0;
-    }
-    .row.content {height: 450px}
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    footer {
-      background-color: #dbb0b0;
-      color: white;
-      padding: 15px;
-    }
   </style>
 </head>
 <body>
@@ -81,7 +81,7 @@
             <td>2023-10-07</td>
             <td>Low</td>
             <td>
-              <a class="edit" title="Edit" data-toggle="tooltip" href="edit.html?word=apple&meaning=사과&level=Level%201"><i class="material-icons">edit</i></a>
+              <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></a>
               <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></a>
             </td>
         </tr>
