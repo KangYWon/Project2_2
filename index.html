@@ -5,8 +5,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/my.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- 추가된 코드 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 저장된 데이터를 가져와서 테이블에 추가하는 함수 호출
+        displayStoredData();
+    });
+
+    function displayStoredData() {
+        // 로컬 스토리지에서 'formData' 키로 저장된 데이터 가져오기
+        var storedData = localStorage.getItem('formData');
+
+        // 저장된 데이터가 있다면
+        if (storedData) {
+            // JSON 형식의 문자열을 객체로 변환
+            var formData = JSON.parse(storedData);
+
+            // 새로운 행을 생성하고 테이블에 추가
+            var table = document.querySelector('.table tbody');
+            var newRow = table.insertRow(table.rows.length);
+
+            // 각 열에 데이터 추가
+            newRow.insertCell(0).textContent = table.rows.length; // 순서
+            newRow.insertCell(1).textContent = formData.word; // 단어
+            newRow.insertCell(2).textContent = formData.meaning; // 뜻
+            newRow.insertCell(3).textContent = formData.level; // 레벨
+            newRow.insertCell(4).textContent = getCurrentDate(); // 현재 날짜
+            newRow.insertCell(5).innerHTML = '<button onclick="deleteRow(this)">삭제</button>, <button onclick="editRow(this)">수정</button>'; // 삭제, 수정 버튼
+        }
+    }
+
+    function getCurrentDate() {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        return date;
+    }
+
+    function deleteRow(button) {
+        // 삭제 버튼이 클릭된 행 삭제
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+    function editRow(button) {
+        alert('수정 기능은 여기에 구현하세요.');
+    }
+  </script>
+
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -31,21 +79,7 @@
       color: white;
       padding: 15px;
     }
-  
-   
-      /* phone & desktop*/
-    @media only screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .content {
-        padding-top: 20px; /* Adjust as needed */
-      }
-      table {
-        overflow-x: auto;
-      }
-    }
+
   </style>
 </head>
 <body>
@@ -64,7 +98,7 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="add.html">Add</a></li>
-          <li><a href="#">View</a></li>
+          <li><a href="view.html">View</a></li>
           <li><a href="#">Edit</a></li>
         </ul>
       </div>
@@ -94,16 +128,6 @@
                   <th>Menu</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td class="text-nowrap">1</td>
-                  <td class="text-nowrap">apple</td>
-                  <td class="text-nowrap">사과</td>
-                  <td class="text-nowrap">*</td>
-                  <td class="text-nowrap">2023-10-6</td>
-                  <td class="text-nowrap">삭제,수정</td>
-                </tr>
-              </tbody>
             </table>
           </div>
         </div>

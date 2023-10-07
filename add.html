@@ -24,6 +24,13 @@
             alert('입력이 되지 않았습니다. 다시 입력해주세요! ');
             return;
         }
+        var formData = {
+            word: word,
+            meaning: meaning,
+            level: level
+        };
+        localStorage.setItem('formData', JSON.stringify(formData));
+
 
         // Show alert
         alert('Word added successfully!');
@@ -107,7 +114,7 @@
     </nav>
     <div class="container">
         <h2>Add Word</h2>
-        <form name="form" action="add_ok.php" id="addWordForm" method="post" >
+        <form name="form" action="view.html" id="addWordForm" method="post" >
             <div class="form-group">
                 <label for="word">Word:</label>
                 <input type="text" class="form-control" id="word" required>
