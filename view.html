@@ -93,17 +93,14 @@
     newRow.insertCell(2).textContent = formData.meaning;
     newRow.insertCell(3).textContent = formData.level;
     newRow.insertCell(4).textContent = getCurrentDate();
-    
-    var deleteButton = createButton('삭제', function () {
+
+    newRow.insertCell(5).appendChild(createButton('삭제', function () {
       deleteRow(newRow);
-    });
+    }));
 
-    var editButton = createButton('수정', function () {
+    newRow.insertCell(6).appendChild(createButton('수정', function () {
       editRow(newRow);
-    });
-
-    newRow.insertCell(5).appendChild(deleteButton);
-    newRow.insertCell(6).appendChild(editButton);
+    }));
   }
 
   function getCurrentDate() {
@@ -125,7 +122,29 @@
     localStorage.setItem('formData', JSON.stringify(storedData));
     row.parentNode.removeChild(row);
     console.log("Deleted!");
+
+    // 다시 저장된 데이터를 불러와서 테이블을 업데이트
+    displayStoredData();
   }
+
+  function displayStoredData() {
+    var storedData = localStorage.getItem('formData');
+    if (storedData) {
+      var formData = JSON.parse(storedData);
+      // 기존의 데이터를 모두 지우고 새로운 데이터로 테이블을 채움
+      clearTable();
+      addRowToTable(formData);
+    }
+  }
+
+  function clearTable() {
+    var tbody = document.getElementById('wordTableBody');
+    // tbody의 모든 자식 노드를 제거
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
+  }
+
 
   function editRow(row) {
     var word = row.cells[1].textContent;
@@ -133,7 +152,7 @@
     var level = row.cells[3].textContent;
     window.location.href = 'edit.html?word=' + encodeURIComponent(word) + '&meaning=' + encodeURIComponent(meaning) + '&level=' + encodeURIComponent(level);
   }
-</script>
+  </script>
 
 </body>
 </html>
