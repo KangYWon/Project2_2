@@ -11,62 +11,49 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('home-link').classList.remove('active');
-            document.getElementById('add-link').classList.remove('active');
-            document.getElementById('view-link').classList.remove('active');
-            document.getElementById('edit-link').classList.add('active');
+  <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              document.getElementById('home-link').classList.remove('active');
+              document.getElementById('add-link').classList.remove('active');
+              document.getElementById('view-link').classList.remove('active');
+              document.getElementById('edit-link').classList.add('active');
 
-            bringForm();
-        });
+              bringForm();
+          });
 
-        function bringForm() {
-            // Get URL parameters
-            var urlParams = new URLSearchParams(window.location.search);
-            
-            // Check if parameters exist
-            if (urlParams.has('word') && urlParams.has('meaning') && urlParams.has('level')) {
-                // Get values from parameters
-                var word = urlParams.get('word');
-                var meaning = urlParams.get('meaning');
-                var level = urlParams.get('level');
+          function bringForm() {
+              // Get URL parameters
+              var urlParams = new URLSearchParams(window.location.search);
+              
+              // Check if parameters exist
+              if (urlParams.has('word') && urlParams.has('meaning') && urlParams.has('level')) {
+                  // Get values from parameters
+                  var word = urlParams.get('word');
+                  var meaning = urlParams.get('meaning');
+                  var level = urlParams.get('level');
 
-                // Set values to form fields
-                document.getElementById('word').value = decodeURIComponent(word);
-                document.getElementById('meaning').value = decodeURIComponent(meaning);
-                document.getElementById('level').value = decodeURIComponent(level);
-            }
-        }
-            
-        function saveWord() {
-            // Get the values from the form
-            var word = document.getElementById('word').value;
-            var meaning = document.getElementById('meaning').value;
-            var level = document.getElementById('level').value;
+                  document.getElementById('word').value = decodeURIComponent(word);
+                  document.getElementById('meaning').value = decodeURIComponent(meaning);
+                  document.getElementById('level').value = decodeURIComponent(level);
+              }
+          }
+              
+          function saveWord() {
+              // Get the values from the form
+              var word = document.getElementById('word').value;
+              var meaning = document.getElementById('meaning').value;
+              var level = document.getElementById('level').value;
 
-            // Encode values for URL
-            var encodedWord = encodeURIComponent(word);
-            var encodedMeaning = encodeURIComponent(meaning);
-            var encodedLevel = encodeURIComponent(level);
-
-            // Redirect to view.html with parameters
-            window.location.href = "view.html?word=" + encodedWord + "&meaning=" + encodedMeaning + "&level=" + encodedLevel;
-        }   
-</script>
-    
-
-<style>
-    .form-control{
-      width: 50%;
-    }
-    
-    .form-group.text-right {
-      margin-right: 45%; 
-    }
-
-</style>
+              // Encode values for URL
+              var encodedWord = encodeURIComponent(word);
+              var encodedMeaning = encodeURIComponent(meaning);
+              var encodedLevel = encodeURIComponent(level);
+              
+              window.location.href = "view.html?word=" + encodedWord + "&meaning=" + encodedMeaning + "&level=" + encodedLevel;
+          }   
+  </script>
 </head>
+
 <body>
 
     <nav class="navbar navbar-inverse">
@@ -123,7 +110,6 @@
             </div>  
         </form>
     </div>
-    
     
     <footer class="container-fluid text-center">
     <p>English is very Fun!!</p>
