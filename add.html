@@ -17,7 +17,7 @@
         var word = document.getElementById('word').value;
         var meaning = document.getElementById('meaning').value;
         var level = document.getElementById('level').value;
-        var importance = document.getElementById('importance').value;
+        var importance = document.querySelector('input[name="importance"]:checked').value;
 
         // Check if required fields are not empty
         if (word.trim() === '' || meaning.trim() === '') {
@@ -33,6 +33,7 @@
         };
 
         alert('Word added successfully!');
+        
     } 
 
         document.addEventListener('DOMContentLoaded', function () {
