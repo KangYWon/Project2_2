@@ -31,10 +31,13 @@
                   var word = urlParams.get('word');
                   var meaning = urlParams.get('meaning');
                   var level = urlParams.get('level');
+                  var importance = urlParams.get('importance');
+                  var importance = document.querySelector('input[name="importance"]:checked').value;
 
                   document.getElementById('word').value = decodeURIComponent(word);
                   document.getElementById('meaning').value = decodeURIComponent(meaning);
                   document.getElementById('level').value = decodeURIComponent(level);
+                  document.getElementById('importance').value = decodeURIComponent(importance);
               }
           }
               
@@ -43,13 +46,19 @@
               var word = document.getElementById('word').value;
               var meaning = document.getElementById('meaning').value;
               var level = document.getElementById('level').value;
+              var importance = document.querySelector('input[name="importance"]:checked').value;
 
+              if (word.trim() === '' || meaning.trim() === '') {
+                  alert('입력이 되지 않았습니다. 다시 입력해주세요! ');
+                  return;
+              }
+              alert('Word edited successfully!');
               // Encode values for URL
               var encodedWord = encodeURIComponent(word);
               var encodedMeaning = encodeURIComponent(meaning);
               var encodedLevel = encodeURIComponent(level);
-              
-              window.location.href = "view.html?word=" + encodedWord + "&meaning=" + encodedMeaning + "&level=" + encodedLevel;
+              var encodedImportance = encodeURIComponent(importance);
+              window.location.href = "view.html?word=" + encodedWord + "&meaning=" + encodedMeaning + "&level=" + encodedLevel + "&importance=" + encodedImportance;
           }   
   </script>
 </head>

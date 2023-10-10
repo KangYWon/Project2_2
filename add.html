@@ -17,9 +17,10 @@
         var word = document.getElementById('word').value;
         var meaning = document.getElementById('meaning').value;
         var level = document.getElementById('level').value;
+        var importance = document.getElementById('importance').value;
 
         // Check if required fields are not empty
-        if (word.trim() === '' || meaning.trim() === '' || level.trim() === '') {
+        if (word.trim() === '' || meaning.trim() === '') {
             alert('입력이 되지 않았습니다. 다시 입력해주세요! ');
             return;
         }
@@ -27,7 +28,8 @@
         var newWord = {
             word: word,
             meaning: meaning,
-            level: level
+            level: level,
+            importance: importance
         };
 
         alert('Word added successfully!');
